@@ -1,22 +1,15 @@
-def insert(name:str,age:int):
-# type annotation is still not type enforcement
+from pydantic import BaseModel
 
+class Patient(BaseModel):
+    name: str
+    age: int
 
-    if type(name)==str and type(age)==int:
-        print(name)
-        print(age)
-        print('Inserted into Database')
-    else:
-        raise TypeError('Incorrect data type')
+def insert(patient: Patient):
+    print(patient.name)
+    print(patient.age)
+    print('Inserted')
 
-def update(name:str,age:int):
-# type annotation is still not type enforcement
-    if type(name)==str and type(age)==int:
-        print(name)
-        print(age)
-        print('updated')
-    else:
-        raise TypeError('Incorrect data type')
+# patient_info= {'name':'doof', 'age':42}
+patient1 = Patient(name ='doof', age = 42)
 
-
-insert('Doof',42)
+insert(patient1)
