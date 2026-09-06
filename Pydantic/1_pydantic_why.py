@@ -1,14 +1,14 @@
 from pydantic import BaseModel, EmailStr, AnyUrl, Field
-from typing import List, Dict, Optional
-
+from typing import List, Dict, Optional, Annotated
+# field can be used for data validation and to attach the metadata with Annotated
 class Patient(BaseModel):
-    name: str
+    name: Annotated[str, Field(max_length=50, title='Name of the patient',description='Name should be less than 50 characters', examples=['Doof','Bidoof'])]
     email: EmailStr
     Url: AnyUrl
-    age: int
-    weight: float
+    age: int= Field(gt=0, lt=120)
+    weight: Annotated[float, Field(gt=0, strict=True)]
     married: Optional[bool] =False
-    allergies: Optional[List[str]] =None
+    allergies: Optional[List[str]] = Field(max_length=5)
     contact_details: Dict[str, str]
 
 def insert(patient: Patient): # patient:Patient is annotation not enforcement
